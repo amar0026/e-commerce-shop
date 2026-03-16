@@ -3,7 +3,7 @@ import { useNavigate } from "react-router-dom";
 import {
   CreditCard, Landmark, Smartphone, ChevronRight, Home,
   Lock, Check, ShoppingBag, Tag, Truck, ChevronDown,
-  Plus, ArrowRight, Shield, Zap, X, Package
+  ArrowRight, Shield, Zap, X, Package
 } from "lucide-react";
 
 /* ─────────────────────────────────────────────

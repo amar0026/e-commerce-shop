@@ -4,7 +4,7 @@ import {
   ShoppingBag, ChevronRight, Home, Shield, Zap,
   Share2, Package, Eye
 } from 'lucide-react';
-import { useNavigate, useParams } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 
 /* ─────────────────────────────────────────────
    Product Data — same Cloudinary images as ShopCollection

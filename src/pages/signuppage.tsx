@@ -85,6 +85,10 @@ export default function SignupPage() {
         <div className="fixed inset-0 pointer-events-none z-0"
           style={{ backgroundImage:"radial-gradient(circle,rgba(249,115,22,.07) 1px,transparent 1px)", backgroundSize:"28px 28px", animation:"dotDrift 18s linear infinite" }}/>
 
+        {/* top stripe */}
+        <div className="fixed top-0 left-0 right-0 h-[3px] z-50"
+          style={{ background:"linear-gradient(90deg,#f97316,#ea580c,#f97316,#ea580c)", backgroundSize:"300% 100%", animation:"shimmerBar 3s linear infinite" }}/>
+
         {/* floating particles */}
         {[
           { top:"10%", left:"6%",  animationDelay:"0s",    animationDuration:"4s" },
@@ -208,7 +212,7 @@ export default function SignupPage() {
 
                 {/* Name row */}
                 <div style={fade(0.12)} className="grid grid-cols-2 gap-3">
-                  {(["firstName","lastName"] as const).map((k,i) => (
+                  {(["firstName","lastName"] as const).map((k) => (
                     <div key={k}>
                       <label className="block text-[10px] font-bold text-gray-500 uppercase tracking-wider mb-1.5">
                         {k==="firstName"?"First Name":"Last Name"}
