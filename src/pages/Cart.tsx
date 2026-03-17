@@ -202,7 +202,7 @@ export default function CartPage() {
                 <span/>
               </div>
 
-              {items.map((item, i) => (
+              {Array.isArray(items) && items.map((item, i) => (
                 <div key={`${item.id}-${item.selectedSize}`}
                   className="relative bg-white border border-black/8 rounded-2xl overflow-hidden hover:border-orange-200 hover:shadow-[0_8px_28px_rgba(249,115,22,.09)] transition-all duration-300 group"
                   style={{ animation:`itemIn .5s cubic-bezier(.16,1,.3,1) ${i*0.07}s both` }}>
@@ -361,7 +361,7 @@ export default function CartPage() {
 
                   {/* Coupon */}
                   <div>
-                    <label className="block text-[10px] font-bold text-gray-500 uppercase tracking-wider mb-1.5 flex items-center gap-1.5">
+                    <label className="block text-[10px] font-bold text-gray-500 uppercase tracking-wider mb-1.5 items-center gap-1.5">
                       <Tag size={11} className="text-orange-400"/>Coupon Code
                     </label>
                     <div className="flex gap-2">

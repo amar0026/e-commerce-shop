@@ -72,7 +72,7 @@ interface ShopPageProps {
 
 export default function ShopPage({ onCartOpen }: ShopPageProps) {
   /* ── CART CONTEXT ── */
-  const { addItem, totalItems } = useCart();
+  const { addItem } = useCart();
 
   const [activeCat, setActiveCat] = useState("All");
   const [search,    setSearch]    = useState("");
@@ -178,20 +178,7 @@ export default function ShopPage({ onCartOpen }: ShopPageProps) {
                 </p>
               </div>
 
-              {/* View Bag button — shows when cart has items */}
-              {totalItems > 0 && (
-                <button
-                  onClick={() => onCartOpen?.()}
-                  className="relative inline-flex items-center gap-2 bg-orange-500 text-white font-bold text-[11px] tracking-[.14em] uppercase px-5 py-2.5 rounded-2xl cursor-pointer border-none hover:bg-orange-600 transition-all hover:-translate-y-0.5 hover:shadow-[0_6px_18px_rgba(249,115,22,.35)]"
-                  style={{ animation:"addedPop .4s ease" }}
-                >
-                  <ShoppingBag size={14}/>
-                  View Bag
-                  <span className="w-5 h-5 bg-white text-orange-500 font-black text-[10px] rounded-full flex items-center justify-center leading-none">
-                    {totalItems}
-                  </span>
-                </button>
-              )}
+             
             </div>
           </div>
 

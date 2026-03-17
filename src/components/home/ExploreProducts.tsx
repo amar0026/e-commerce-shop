@@ -153,7 +153,7 @@ const ExploreProducts: React.FC = () => {
 
             {/* Shop Now pill button */}
             <button
-              onClick={() => navigate("/shop")}
+              onClick={() => navigate("/CATEGORIES")}
               className="group inline-flex items-center gap-2 bg-[#111] text-white text-[11px] font-bold tracking-[.15em] uppercase px-6 py-2.5 rounded-2xl border-none cursor-pointer overflow-hidden relative transition-all duration-300 hover:-translate-y-0.5 hover:shadow-[0_8px_24px_rgba(249,115,22,.3)]"
             >
               <span

@@ -18,10 +18,14 @@ const Navbar: React.FC = () => {
   const { getTotalItems } = useCart();
   const { wishlistItems }  = useWishlist();
 
-  const [mobileMenu,  setMobileMenu]  = useState(false);
-  const [showSearch,  setShowSearch]  = useState(false);
-  const [searchTerm,  setSearchTerm]  = useState("");
-  const [logoError,   setLogoError]   = useState(false);
+  const [mobileMenu,     setMobileMenu]     = useState(false);
+  const [mobileCatOpen,  setMobileCatOpen]  = useState(false); // ← was missing
+  const [showSearch,     setShowSearch]     = useState(false);
+  const [searchTerm,     setSearchTerm]     = useState("");
+  const [logoError,      setLogoError]      = useState(false);
+
+  // Suppress unused-variable warning for mobileCatOpen if you don't render it yet
+  void mobileCatOpen;
 
   const isActive = (path: string) =>
     `text-sm font-semibold tracking-wide transition-colors duration-150 ${
@@ -33,12 +37,6 @@ const Navbar: React.FC = () => {
       navigate(`/shop?search=${searchTerm}`);
       setShowSearch(false);
     }
-  };
-
-  const goToCategory = (key: string) => {
-    navigate("/categories", { state: { category: key } });
-    setMobileMenu(false);
-    setMobileCatOpen(false);
   };
 
   return (
@@ -155,7 +153,12 @@ const Navbar: React.FC = () => {
               SHOP
             </button>
 
-            <button onClick={() => { navigate("/categories"); setMobileMenu(false); }}
+            <button
+              onClick={() => {
+                navigate("/categories");
+                setMobileMenu(false);
+                setMobileCatOpen(false);
+              }}
               className="text-left px-2 py-2.5 hover:text-orange-500 transition-colors">
               CATEGORIES
             </button>
