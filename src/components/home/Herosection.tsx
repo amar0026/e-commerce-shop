@@ -45,6 +45,15 @@ const slides: Slide[] = [
     img: "https://res.cloudinary.com/dquki4xol/image/upload/v1775906061/elegant-woman-in-orange-traditional-dress-at-palace-photo_fxvbet.jpg",
     accent: "#ea1e6a",
   },
+   {
+    id: 4,
+    tag: "Sabse Sasta - Sabse Fast ",
+    heading: ["Mall Ka Baap", "Top Deals on ", "Latest Fashion ", "& More"],
+    accentIdx: 1,
+    body: "Flat 50% off + Free Delivery .",
+    img: "https://res.cloudinary.com/dquki4xol/image/upload/v1775920937/WhatsApp_Image_2026-04-11_at_8.49.23_PM_tgxanw.jpg",
+    accent: "#ea1e6a",
+  },
 ];
 
 const categories: Category[] = [
@@ -118,7 +127,7 @@ export default function HeroSection() {
 
               <p className="text-gray-700 max-w-md">{slide.body}</p>
 
-              <button className="bg-black text-white px-8 py-3 rounded-2xl font-semibold hover:shadow-xl">
+              <button className="bg-black text-white px-8 py-3 rounded-2xl font-semibold hover:bg-amber-700 ">
                 Shop Now
               </button>
 
