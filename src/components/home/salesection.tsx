@@ -44,7 +44,7 @@ const SECTIONS: {
     product: {
       id: 3, name: "Premium Wool Blazer", cat: "Men", sub: "Suits",
       price: 3499, orig: 5999,
-      img: "https://res.cloudinary.com/dquki4xol/image/upload/v1773295573/4_2ab5d4e8-2cc9-4134-83a2-e8a061395274_w6xpfq.webp",
+      img: "https://res.cloudinary.com/dquki4xol/image/upload/v1776079502/images_10_lqvavf.jpg",
       badge: "SALE", badgeColor: "#ea580c", rating: 4.7, reviews: 214,
       colors: ["#111","#2c3e50","#555"], fabric: "Wool Blend", sizes: ["S","M","L","XL"],
     },
@@ -57,9 +57,9 @@ const SECTIONS: {
     accent: "#ec4899",
     accentDark: "#db2777",
     product: {
-      id: 11, name: "Embroidered Anarkali", cat: "Women", sub: "Ethnic",
+      id: 11, name: "Embroidered Lehnga", cat: "Women", sub: "Ethnic",
       price: 2150, orig: 3200,
-      img: "https://res.cloudinary.com/dquki4xol/image/upload/v1773296338/AmericanSilkPinkZariEmbroideredAnarkaliSuitPantWithDupatta_2_fzwckx.webp",
+      img: "https://res.cloudinary.com/dquki4xol/image/upload/v1776079514/PCCGH1466A_1_n4btwb.webp",
       badge: "HOT", badgeColor: "#f97316", rating: 4.0, reviews: 75,
       colors: ["#8e44ad","#c0392b","#f39c12"], fabric: "Georgette", sizes: ["S","M","L","XL","XXL"],
     },
@@ -74,7 +74,7 @@ const SECTIONS: {
     product: {
       id: 10, name: "Kids Dungaree Playsuit", cat: "Kids", sub: "Casuals",
       price: 599, orig: 899,
-      img: "https://res.cloudinary.com/dquki4xol/image/upload/v1773296148/images_26_wxn2do.jpg",
+      img: "https://res.cloudinary.com/dquki4xol/image/upload/v1776079512/images_12_lsjley.jpg",
       badge: "NEW", badgeColor: "#16a34a", rating: 4.8, reviews: 61,
       colors: ["#3b82f6","#f97316","#fff"], fabric: "Denim Cotton", sizes: ["2Y","4Y","6Y","8Y"],
     },
@@ -89,7 +89,7 @@ const SECTIONS: {
     product: {
       id: 101, name: "Slim Fit Oxford Shirt", cat: "Boy", sub: "Shirts",
       price: 449, orig: 799,
-      img: "https://res.cloudinary.com/dquki4xol/image/upload/v1773295572/images_22_n6ftjn.jpg",
+      img: "https://res.cloudinary.com/dquki4xol/image/upload/v1776079504/images_8_u4lvty.jpg",
       badge: "NEW", badgeColor: "#16a34a", rating: 4.5, reviews: 88,
       colors: ["#fff","#6b8cba","#3b82f6"], fabric: "100% Cotton", sizes: ["4Y","6Y","8Y","10Y","12Y"],
     },

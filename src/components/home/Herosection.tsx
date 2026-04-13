@@ -1,5 +1,6 @@
 import { useState, useEffect, useRef } from "react";
 import { ChevronLeft, ChevronRight } from "lucide-react";
+import { useNavigate } from "react-router-dom";
 
 interface Slide {
   id: number;
@@ -9,6 +10,7 @@ interface Slide {
   body: string;
   img: string;
   accent: string;
+  isDealSlide?: boolean;
 }
 
 interface Category {
@@ -45,14 +47,15 @@ const slides: Slide[] = [
     img: "https://res.cloudinary.com/dquki4xol/image/upload/v1775906061/elegant-woman-in-orange-traditional-dress-at-palace-photo_fxvbet.jpg",
     accent: "#ea1e6a",
   },
-   {
+  {
     id: 4,
-    tag: "Sabse Sasta - Sabse Fast ",
-    heading: ["Mall Ka Baap", "Top Deals on ", "Latest Fashion ", "& More"],
+    tag: "Sabse Sasta · Sabse Fast",
+    heading: ["Mall Ka", "Baap", "Top Deals", "Are Live!"],
     accentIdx: 1,
-    body: "Flat 50% off + Free Delivery .",
+    body: "Flat 50% off on the latest fashion for men, women & kids — with free delivery on every order.",
     img: "https://res.cloudinary.com/dquki4xol/image/upload/v1775920937/WhatsApp_Image_2026-04-11_at_8.49.23_PM_tgxanw.jpg",
     accent: "#ea1e6a",
+    isDealSlide: true,
   },
 ];
 
@@ -65,81 +68,180 @@ const categories: Category[] = [
   { label: "Western Styles",     img: "https://res.cloudinary.com/dquki4xol/image/upload/v1775906958/approval_06_09_2024O1CN01zcnDuS26pEdhlNmrX__21_212823427710-0-cib_aa2c2d5f-20c3-4cc9-b48e-ff5ec3f7358f_km3tuv.jpg", items: ["Jeans", "Blazers", "Denim"] },
 ];
 
+const tickerItems = [
+  "Men's Wear", "Women's Collection", "Ethnic Wear", "Kids Fashion",
+  "Western Styles", "Free Delivery · Every Order", "Flat 50% Off Today",
+];
+
+/* ─── Deal Slide (Slide 4) ─────────────────────────────── */
+function DealSlide({ slide, onShopNow }: { slide: Slide; onShopNow: () => void }) {
+  return (
+    <div className="relative w-full overflow-hidden bg-[#fff8f0] flex" style={{ minHeight: "70vh" }}>
+
+      {/* RIGHT — shop image */}
+      <div className="absolute right-0 top-0 bottom-0 w-[58%]">
+        <img
+          src={slide.img}
+          alt="Mall Ka Baap Shop"
+          className="w-full h-full object-cover object-center"
+        />
+        <div className="absolute left-0 top-0 bottom-0 w-48 bg-gradient-to-r from-[#fff8f0] to-transparent" />
+      </div>
+
+      {/* DISCOUNT STAMP */}
+      <div
+        className="absolute z-20 flex flex-col items-center justify-center text-white rounded-full border-[3px] border-white"
+        style={{
+          top: 28, right: 28,
+          width: 100, height: 100,
+          background: "#ea1e6a",
+          boxShadow: "0 6px 28px rgba(234,30,106,0.4)",
+          animation: "stampPop 0.45s cubic-bezier(.16,1,.3,1) both",
+        }}
+      >
+        <span style={{ fontSize: 30, fontWeight: 900, lineHeight: 1 }}>50%</span>
+        <span style={{ fontSize: 11, fontWeight: 800, letterSpacing: "0.1em", textTransform: "uppercase", opacity: 0.9 }}>OFF</span>
+        <span style={{ fontSize: 9, fontWeight: 600, opacity: 0.72, letterSpacing: "0.05em" }}>Today Only</span>
+      </div>
+
+      {/* LEFT — content */}
+      <div
+        className="relative z-10 flex flex-col justify-center gap-5 px-8 sm:px-12 lg:px-16 py-16"
+        style={{ width: "52%", background: "linear-gradient(105deg, #fff8f0 62%, transparent 100%)" }}
+      >
+        {/* Tag pill */}
+        <div className="inline-flex items-center gap-2 border border-[#ea1e6a] bg-white rounded-full px-4 py-[5px] w-fit">
+          <span className="w-[7px] h-[7px] rounded-full bg-[#ea1e6a] animate-pulse" />
+          <span style={{ fontSize: 10, fontWeight: 800, letterSpacing: "0.2em", textTransform: "uppercase", color: "#ea1e6a" }}>
+            Sabse Sasta · Sabse Fast
+          </span>
+        </div>
+
+        {/* Headline */}
+        <h1 className="font-extrabold text-gray-900 leading-[1.05]" style={{ fontSize: "clamp(36px,5vw,54px)" }}>
+          Mall Ka<br />
+          <span style={{ color: "#ea1e6a" }}>Baap</span><br />
+          <span style={{ color: "#fff", background: "#ea1e6a", padding: "0 12px", borderRadius: 8, display: "inline-block", lineHeight: 1.18 }}>
+            Top Deals
+          </span>
+          <br />
+          Are Live!
+        </h1>
+
+        {/* Body */}
+        <p className="text-gray-500" style={{ fontSize: 14, lineHeight: 1.7, maxWidth: 320 }}>
+          {slide.body}
+        </p>
+
+        {/* Badges */}
+        <div className="flex flex-wrap gap-3">
+          <div className="inline-flex items-center gap-2 text-white font-bold rounded-xl"
+            style={{ background: "#ea1e6a", fontSize: 13, padding: "9px 20px" }}>
+            🔥 Flat 50% Off
+          </div>
+          <div className="inline-flex items-center gap-2 font-bold rounded-xl border"
+            style={{ background: "#fff3e0", color: "#b85c00", borderColor: "#f59500", fontSize: 12, padding: "9px 16px" }}>
+            🚚 Free Delivery
+          </div>
+        </div>
+
+        {/* CTA */}
+        <button
+          onClick={onShopNow}
+          className="inline-flex items-center gap-3 font-extrabold rounded-xl w-fit transition-all duration-200"
+          style={{ background: "#111", color: "#fff", fontSize: 13, padding: "13px 28px" }}
+          onMouseEnter={e => (e.currentTarget.style.background = "#ea1e6a")}
+          onMouseLeave={e => (e.currentTarget.style.background = "#111")}
+        >
+          Shop Now
+          <span className="inline-flex items-center justify-center rounded-full text-white"
+            style={{ background: "#ea1e6a", width: 22, height: 22, fontSize: 12 }}>
+            →
+          </span>
+        </button>
+      </div>
+    </div>
+  );
+}
+
+/* ─── Regular Slide ────────────────────────────────────── */
+function RegularSlide({ slide, onShopNow }: { slide: Slide; onShopNow: () => void }) {
+  return (
+    <div className="relative overflow-hidden flex items-center" style={{ minHeight: "70vh" }}>
+      <img src={slide.img} alt="banner" className="absolute inset-0 w-full h-full object-cover" />
+      <div className="absolute inset-0 bg-gradient-to-r from-white via-white/70 to-transparent lg:w-1/2" />
+
+      <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-8 lg:px-16 w-full">
+        <div className="grid lg:grid-cols-2 gap-12 items-center py-20">
+          <div className="space-y-8">
+
+            <div className="inline-flex items-center gap-2 bg-white border rounded-full px-4 py-2 shadow">
+              <span className="w-2 h-2 rounded-full animate-pulse" style={{ backgroundColor: slide.accent }} />
+              <span className="text-xs font-semibold">{slide.tag}</span>
+            </div>
+
+            <h1 className="text-4xl sm:text-5xl lg:text-6xl font-extrabold leading-tight text-gray-900">
+              {slide.heading.map((word, i) => (
+                <span key={i}>
+                  {i === slide.accentIdx
+                    ? <span style={{ color: slide.accent }}>{word}</span>
+                    : word}
+                  <br />
+                </span>
+              ))}
+            </h1>
+
+            <p className="text-gray-700 max-w-md">{slide.body}</p>
+
+            <button
+              onClick={onShopNow}
+              className="bg-black text-white px-8 py-3 rounded-2xl font-semibold hover:bg-amber-700 transition-colors"
+            >
+              Shop Now
+            </button>
+
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+}
+
+/* ─── Main Component ───────────────────────────────────── */
 export default function HeroSection() {
+  const navigate = useNavigate();
   const [current, setCurrent] = useState<number>(0);
   const autoRef = useRef<ReturnType<typeof setInterval> | null>(null);
 
   const slide = slides[current];
 
-  const prev = (): void =>
-    setCurrent((current - 1 + slides.length) % slides.length);
-
-  const next = (): void =>
-    setCurrent((current + 1) % slides.length);
-
+  const prev = (): void => setCurrent((current - 1 + slides.length) % slides.length);
+  const next = (): void => setCurrent((current + 1) % slides.length);
   const goTo = (idx: number): void => setCurrent(idx);
+
+  // Single handler used by all Shop Now buttons and category clicks
+  const handleShopNow = (): void => navigate("/shop");
 
   useEffect(() => {
     autoRef.current = setInterval(next, 4500);
-    return () => {
-      if (autoRef.current) clearInterval(autoRef.current);
-    };
+    return () => { if (autoRef.current) clearInterval(autoRef.current); };
   }, [current]);
 
   return (
     <div className="font-['Plus_Jakarta_Sans']">
 
-      {/* HERO */}
-      <div className="relative overflow-hidden h-[70vh] md:h-[80vh] lg:h-auto flex items-center">
+      {/* ── HERO ── */}
+      <div className="relative">
+        {slide.isDealSlide
+          ? <DealSlide slide={slide} onShopNow={handleShopNow} />
+          : <RegularSlide slide={slide} onShopNow={handleShopNow} />
+        }
 
-        <img
-          src={slide.img}
-          alt="banner"
-          className="absolute inset-0 w-full h-full object-cover"
-        />
-
-        <div className="absolute inset-0 bg-gradient-to-r from-white via-white/70 to-transparent lg:w-1/2" />
-
-        <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-8 lg:px-16 w-full">
-          <div className="grid lg:grid-cols-2 gap-12 items-center py-20">
-            <div className="space-y-8">
-
-              <div className="inline-flex items-center gap-2 bg-white border rounded-full px-4 py-2 shadow">
-                <span
-                  className="w-2 h-2 rounded-full animate-pulse"
-                  style={{ backgroundColor: slide.accent }}
-                />
-                <span className="text-xs font-semibold">{slide.tag}</span>
-              </div>
-
-              <h1 className="text-4xl sm:text-5xl lg:text-6xl font-extrabold leading-tight text-gray-900">
-                {slide.heading.map((word: string, i: number) => (
-                  <span key={i}>
-                    {i === slide.accentIdx ? (
-                      <span style={{ color: slide.accent }}>{word}</span>
-                    ) : (
-                      word
-                    )}
-                    <br />
-                  </span>
-                ))}
-              </h1>
-
-              <p className="text-gray-700 max-w-md">{slide.body}</p>
-
-              <button className="bg-black text-white px-8 py-3 rounded-2xl font-semibold hover:bg-amber-700 ">
-                Shop Now
-              </button>
-
-            </div>
-          </div>
-        </div>
-
-        {/* SLIDER CONTROLS */}
+        {/* Slider controls */}
         <div className="absolute left-1/2 -translate-x-1/2 bottom-8 flex items-center gap-5 z-20">
           <button
             onClick={prev}
-            className="w-10 h-10 rounded-full border bg-white flex items-center justify-center hover:bg-black hover:text-white"
+            className="w-10 h-10 rounded-full border bg-white flex items-center justify-center hover:bg-black hover:text-white transition-colors"
           >
             <ChevronLeft size={18} />
           </button>
@@ -149,9 +251,7 @@ export default function HeroSection() {
               <button
                 key={i}
                 onClick={() => goTo(i)}
-                className={`h-2 rounded-full transition-all ${
-                  i === current ? "w-8" : "w-2 bg-gray-300"
-                }`}
+                className={`h-2 rounded-full transition-all ${i === current ? "w-8" : "w-2 bg-gray-300"}`}
                 style={{ backgroundColor: i === current ? slide.accent : undefined }}
               />
             ))}
@@ -159,77 +259,71 @@ export default function HeroSection() {
 
           <button
             onClick={next}
-            className="w-10 h-10 rounded-full border bg-white flex items-center justify-center hover:bg-black hover:text-white"
+            className="w-10 h-10 rounded-full border bg-white flex items-center justify-center hover:bg-black hover:text-white transition-colors"
           >
             <ChevronRight size={18} />
           </button>
         </div>
       </div>
 
-      {/* CATEGORY STRIP */}
-      <div className="bg-white border-y-1 border-black">
+      {/* ── CATEGORY STRIP ── */}
+      <div className="bg-white border-y border-black">
         <div className="max-w-7xl mx-auto px-4 sm:px-8 lg:px-16">
           <div className="flex h-[130px] sm:h-[160px] lg:h-[200px]">
             {categories.map((cat: Category) => (
               <div
                 key={cat.label}
+                onClick={handleShopNow}
                 className="cat-item flex-1 relative overflow-hidden cursor-pointer border-r border-gray-900 last:border-r-0 group"
               >
-                {/* bg image — dim by default, vivid on hover */}
                 <div
                   className="absolute inset-0 bg-cover bg-center scale-105 group-hover:scale-100 opacity-0 group-hover:opacity-100 transition-all duration-700 ease-out"
                   style={{ backgroundImage: `url(${cat.img})` }}
                 />
-
-                {/* dark overlay on hover */}
                 <div className="absolute inset-0 bg-black/0 group-hover:bg-black/50 transition-all duration-500" />
-
-                {/* red top accent line */}
                 <div className="absolute top-0 left-0 right-0 h-[3px] bg-transparent group-hover:bg-orange-500 transition-all duration-500" />
-
-                {/* content */}
                 <div className="relative z-10 h-full flex flex-col items-center justify-end pb-4 px-2 gap-1">
-
-                  {/* item count */}
                   <div className="text-[9px] font-semibold tracking-[.2em] uppercase text-transparent group-hover:text-white/60 transition-all duration-300 translate-y-2 group-hover:translate-y-0">
                     {cat.items.length * 120}+ styles
                   </div>
-
-                  {/* label */}
                   <div className="text-[10px] sm:text-xs lg:text-sm font-black uppercase tracking-[.12em] text-gray-800 group-hover:text-white transition-all duration-300 text-center leading-tight">
                     {cat.label}
                   </div>
-
-                  {/* arrow */}
                   <div className="text-transparent group-hover:text-[#e63946] text-xs font-bold transition-all duration-300 translate-y-2 group-hover:translate-y-0">
                     →
                   </div>
-
                 </div>
               </div>
             ))}
           </div>
         </div>
       </div>
- {/* MARQUEE */}
-        <div className="overflow-hidden border-t border-gray-100 py-2 bg-white">
-          <div className="flex gap-10 w-max animate-marquee">
-            {[...Array(2)].map((_: undefined, i: number) =>
-              ["Men's Wear", "Women's Collection", "Kids Fashion", "Ethnic Wear", "Western Styles", "Ethnic Wear"].map((item: string) => (
-                <div key={i + item} className="flex items-center gap-2 text-[10px] uppercase tracking-[.18em] text-gray-400">
-                  <span style={{ color: "#e63946" }}>✦</span>
-                  {item}
-                </div>
-              ))
-            )}
-          </div>
+
+      {/* ── MARQUEE ── */}
+      <div className="overflow-hidden border-t border-gray-100 py-2 bg-white">
+        <div className="flex gap-10 w-max animate-marquee">
+          {[...Array(2)].map((_: undefined, i: number) =>
+            tickerItems.map((item: string) => (
+              <div key={i + item} className="flex items-center gap-2 text-[10px] uppercase tracking-[.18em] text-gray-400">
+                <span style={{ color: "#e63946" }}>✦</span>
+                {item}
+              </div>
+            ))
+          )}
         </div>
+      </div>
+
       <style>{`
         @keyframes marquee {
           from { transform: translateX(0); }
           to   { transform: translateX(-50%); }
         }
         .animate-marquee { animation: marquee 22s linear infinite; }
+
+        @keyframes stampPop {
+          from { transform: scale(0.5); opacity: 0; }
+          to   { transform: scale(1);   opacity: 1; }
+        }
 
         .cat-item {
           flex: 1;

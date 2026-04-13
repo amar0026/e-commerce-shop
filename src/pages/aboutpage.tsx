@@ -1,5 +1,6 @@
 import { useEffect, useRef, useState } from "react";
 import { ArrowUpRight, Award, Heart, ShieldCheck, Truck, Users, Star, MapPin, Mail, Phone, ShoppingBag, RotateCcw, Zap } from "lucide-react";
+import { useNavigate } from "react-router-dom";
 
 function useInView(threshold = 0.15) {
   const ref = useRef<HTMLDivElement>(null);
@@ -30,6 +31,9 @@ function Counter({ to, suffix = "" }: { to: number; suffix?: string }) {
 }
 
 export default function AboutPage() {
+  const navigate = useNavigate();
+  const handleShop = () => navigate("/shop");
+
   const welcome = useInView(0.1);
   const story   = useInView(0.1);
   const values  = useInView(0.1);
@@ -46,9 +50,9 @@ export default function AboutPage() {
   ];
 
   const missionPoints = [
-    { icon: <ShoppingBag className="w-5 h-5" />, title: "Diverse Selection",    desc: "High-quality products across every category, curated for every family." },
-    { icon: <Zap className="w-5 h-5" />,         title: "Fast Shipping",        desc: "Same-day dispatch with real-time tracking on every single order." },
-    { icon: <RotateCcw className="w-5 h-5" />,   title: "Hassle-Free Returns",  desc: "Easy, no-questions-asked returns because your satisfaction comes first." },
+    { icon: <ShoppingBag className="w-5 h-5" />, title: "Diverse Selection",   desc: "High-quality products across every category, curated for every family." },
+    { icon: <Zap className="w-5 h-5" />,         title: "Fast Shipping",       desc: "Same-day dispatch with real-time tracking on every single order." },
+    { icon: <RotateCcw className="w-5 h-5" />,   title: "Hassle-Free Returns", desc: "Easy, no-questions-asked returns because your satisfaction comes first." },
   ];
 
   return (
@@ -87,29 +91,36 @@ export default function AboutPage() {
           background-size: 26px 26px;
         }
 
-        .story-img-stack { position: relative; }
-        .story-img-stack .img-back {
-          position: absolute; top: 0; right: 0;
-          width: 55%; height: 100%;
-          border-radius: 20px; overflow: hidden;
-          background: linear-gradient(135deg, #fde68a, #fed7aa);
+        .shop-btn {
+          position: relative; overflow: hidden;
+          background: #111; color: #fff;
+          font-weight: 500; letter-spacing: .03em; font-size: 14px;
+          padding: 14px 32px; border-radius: 999px;
+          display: inline-flex; align-items: center; gap: 8px;
+          border: none; cursor: pointer;
+          transition: transform .2s, box-shadow .2s;
         }
-        .story-img-stack .img-front {
-          position: relative; z-index: 2;
-          width: 60%; border-radius: 20px; overflow: hidden;
-          box-shadow: 0 24px 64px rgba(0,0,0,0.12);
-          margin-top: 40px;
+        .shop-btn:hover { transform: translateY(-2px); box-shadow: 0 16px 40px rgba(234,100,30,0.22); }
+        .shop-btn .btn-fill {
+          position: absolute; inset: 0;
+          background: #ea641e;
+          transform: translateY(100%);
+          transition: transform .5s cubic-bezier(.16,1,.3,1);
+          border-radius: 999px;
         }
+        .shop-btn:hover .btn-fill { transform: translateY(0); }
+        .shop-btn span, .shop-btn svg { position: relative; z-index: 1; }
+        .shop-btn svg { transition: transform .25s; }
+        .shop-btn:hover svg { transform: rotate(45deg); }
       `}</style>
 
       <div className="about-page">
-
 
         {/* ══ WELCOME / MISSION ══ */}
         <section ref={welcome.ref} className="py-20 px-4 sm:px-8 bg-white">
           <div className="max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
 
-            {/* Left: image placeholder */}
+            {/* Left: image */}
             <div className={`fade-right d1 ${welcome.inView ? "in" : ""} relative`}>
               <div className="absolute -top-4 -left-4 w-24 h-24 rounded-2xl bg-orange-100 opacity-60 z-0" />
               <div className="relative z-10 rounded-3xl overflow-hidden shadow-2xl shadow-orange-100 border border-orange-50 aspect-[4/3]">
@@ -208,10 +219,10 @@ export default function AboutPage() {
               </div>
 
               <div className={`fade-right d5 ${story.inView ? "in" : ""}`}>
-                <button className="group relative overflow-hidden bg-[#111] text-white font-medium tracking-wide text-sm px-8 py-4 rounded-full flex items-center gap-2 transition-transform hover:-translate-y-0.5 hover:shadow-xl hover:shadow-orange-200">
-                  <span className="relative z-10">Shop Now</span>
-                  <ArrowUpRight size={15} className="relative z-10 group-hover:rotate-45 transition-transform" />
-                  <span className="absolute inset-0 bg-orange-500 translate-y-full group-hover:translate-y-0 transition-transform duration-500 rounded-full" />
+                <button className="shop-btn" onClick={handleShop}>
+                  <div className="btn-fill" />
+                  <span>Shop Now</span>
+                  <ArrowUpRight size={15} />
                 </button>
               </div>
             </div>
@@ -311,11 +322,12 @@ export default function AboutPage() {
                 </div>
               ))}
             </div>
+
             <div className={`fade-up d4 ${contact.inView ? "in" : ""} mt-12 text-center`}>
-              <button className="group relative overflow-hidden bg-[#111] text-white font-medium tracking-wide text-sm px-10 py-4 rounded-full flex items-center gap-2 mx-auto transition-transform hover:-translate-y-0.5 hover:shadow-xl hover:shadow-orange-200">
-                <span className="relative z-10">Shop the Collection</span>
-                <ArrowUpRight size={15} className="relative z-10 group-hover:rotate-45 transition-transform" />
-                <span className="absolute inset-0 bg-orange-500 translate-y-full group-hover:translate-y-0 transition-transform duration-500 rounded-full" />
+              <button className="shop-btn" onClick={handleShop}>
+                <div className="btn-fill" />
+                <span>Shop the Collection</span>
+                <ArrowUpRight size={15} />
               </button>
             </div>
           </div>
