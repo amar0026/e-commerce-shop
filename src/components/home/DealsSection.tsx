@@ -4,6 +4,7 @@ import { useNavigate } from 'react-router-dom';
 import { useCart } from "../products/CartContext";
 import { useWishlist } from "../products/WishlistContext"; // ← REAL WISHLIST
 
+
 // ─── NO MORE fake useWishlist / useCart defined here ───
 
 interface GarmentProduct {
@@ -122,6 +123,8 @@ const SizeGuideModal: React.FC<{ onClose: () => void }> = ({ onClose }) => {
   );
 };
 
+
+
 /* ── Product data ── */
 const FILTERS = ['All', 'Women', 'Men', 'Kids', 'Ethnic', 'Western'];
 const FILTER_ICONS: Record<string, string> = { Women:'👗', Men:'👔', Kids:'👶', Ethnic:'🪡', Western:'🧥' };
@@ -221,6 +224,7 @@ const ShopCollection: React.FC = () => {
     transform:  visible ? 'translateY(0)' : 'translateY(20px)',
     transition: `opacity .85s ${delay}s cubic-bezier(.16,1,.3,1), transform .85s ${delay}s cubic-bezier(.16,1,.3,1)`,
   });
+  
 
   return (
     <>

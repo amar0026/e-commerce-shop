@@ -28,6 +28,7 @@ import Layout from "./components/common/Layout";
 /* ── Contexts ── */
 import { WishlistProvider } from "./components/products/WishlistContext";
 import { CartProvider } from "./components/products/CartContext";
+import ProductDetails from "./pages/ProductDetail";
 
 function App() {
   return (
@@ -36,14 +37,14 @@ function App() {
         <WishlistProvider>
 
           <Router>
-
+            
             {/* Scroll to top on route change */}
             <ScrollToTop />
 
             <Layout>
 
               <Routes>
-
+               <Route path="/product/:id" element={<ProductDetails />} /> 
                 {/* ── Public Pages ── */}
 
                 <Route path="/" element={<Home />} />
