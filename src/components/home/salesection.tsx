@@ -74,7 +74,7 @@ const SECTIONS: {
     product: {
       id: 10, name: "Kids Dungaree Playsuit", cat: "Kids", sub: "Casuals",
       price: 599, orig: 899,
-      img: "https://res.cloudinary.com/dquki4xol/image/upload/v1776079512/images_12_lsjley.jpg",
+      img: "https://res.cloudinary.com/dquki4xol/image/upload/v1776146893/WhatsApp_Image_2026-04-14_at_11.28.19_AM_muem2o.jpg",
       badge: "NEW", badgeColor: "#16a34a", rating: 4.8, reviews: 61,
       colors: ["#3b82f6","#f97316","#fff"], fabric: "Denim Cotton", sizes: ["2Y","4Y","6Y","8Y"],
     },
