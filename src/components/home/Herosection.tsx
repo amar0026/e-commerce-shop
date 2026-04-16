@@ -75,8 +75,8 @@ const tickerItems = [
   "Western Styles", "Free Delivery · Every Order", "Flat 50% Off Today",
 ];
 
-/* ─── Video Slide — autoplay silent loop, no controls ─── */
-function VideoSlide({ slide, onShopNow }: { slide: Slide; onShopNow: () => void }) {
+/* ─── Video Slide — autoplay silent loop, no controls, no play button ─── */
+function VideoSlide({ slide }: { slide: Slide }) {
   const videoRef = useRef<HTMLVideoElement>(null);
 
   useEffect(() => {
@@ -96,42 +96,13 @@ function VideoSlide({ slide, onShopNow }: { slide: Slide; onShopNow: () => void 
         muted
         playsInline
         autoPlay
-        className="absolute inset-0 w-full h-full object-cover"
+        controls={false}
+        className="absolute inset-0 w-full h-full object-cover video-no-controls"
         style={{ pointerEvents: "none" }}
       />
-      <div className="absolute inset-0 bg-black/50" />
 
-      <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-8 lg:px-16 w-full">
-        <div className="py-20 max-w-xl space-y-8">
 
-          <div className="inline-flex items-center gap-2 bg-white/10 border border-white/30 backdrop-blur-sm rounded-full px-4 py-2">
-            <span className="w-2 h-2 rounded-full animate-pulse" style={{ backgroundColor: slide.accent }} />
-            <span className="text-xs font-semibold text-white">{slide.tag}</span>
-          </div>
 
-          <h1 className="text-4xl sm:text-5xl lg:text-6xl font-extrabold leading-tight text-white drop-shadow-lg">
-            {slide.heading.map((word, i) => (
-              <span key={i}>
-                {i === slide.accentIdx
-                  ? <span style={{ color: slide.accent }}>{word}</span>
-                  : word}
-                <br />
-              </span>
-            ))}
-          </h1>
-
-          <p className="text-white/80 max-w-md text-sm leading-relaxed">{slide.body}</p>
-
-          <button
-            onClick={onShopNow}
-            className="px-8 py-3 rounded-2xl font-bold text-sm transition-opacity duration-200 hover:opacity-85"
-            style={{ background: slide.accent, color: "#fff" }}
-          >
-            Shop Now →
-          </button>
-
-        </div>
-      </div>
     </div>
   );
 }
@@ -239,7 +210,7 @@ export default function HeroSection() {
       setCurrent(c => (c + 1) % slides.length);
     }, delay);
     return () => { if (autoRef.current) clearTimeout(autoRef.current); };
-  }, [current]); // re-runs every time slide changes → always correct delay
+  }, [current]);
 
   return (
     <div className="font-['Plus_Jakarta_Sans']">
@@ -247,7 +218,7 @@ export default function HeroSection() {
       {/* ── HERO ── */}
       <div className="relative">
         {slide.videoUrl
-          ? <VideoSlide slide={slide} onShopNow={handleShopNow} />
+          ? <VideoSlide slide={slide} />
           : slide.isDealSlide
             ? <DealSlide slide={slide} onShopNow={handleShopNow} />
             : <RegularSlide slide={slide} onShopNow={handleShopNow} />
@@ -322,6 +293,23 @@ export default function HeroSection() {
         @keyframes stampPop {
           from { transform: scale(0.5); opacity: 0; }
           to   { transform: scale(1);   opacity: 1; }
+        }
+
+        /* ── Remove browser-injected video play button overlay ── */
+        video.video-no-controls::-webkit-media-controls {
+          display: none !important;
+        }
+        video.video-no-controls::-webkit-media-controls-enclosure {
+          display: none !important;
+        }
+        video.video-no-controls::-webkit-media-controls-overlay-play-button {
+          display: none !important;
+        }
+        video.video-no-controls::-webkit-media-controls-start-playback-button {
+          display: none !important;
+        }
+        video.video-no-controls::-webkit-media-controls-panel {
+          display: none !important;
         }
 
         .cat-item {
